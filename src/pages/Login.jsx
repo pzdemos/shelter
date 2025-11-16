@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { Form, Input, Button, Card, message, theme } from 'antd';
+import { Form, Input, Button, Card, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../api/user';
+
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -10,16 +12,22 @@ const Login = () => {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      console.log('登录信息:', values);
-      // 模拟登录请求
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await login({
+        username: values.username,
+        password: values.password
+      });
+      
+      // 保存token
+      if (response.data?.token) {
+        localStorage.setItem('token', response.data.token);
+      }
       
       messageApi.success('登录成功！');
       setTimeout(() => {
         navigate('/');
       }, 500);
     } catch (error) {
-      messageApi.error('登录失败，请重试');
+      console.error('登录失败:', error);
     } finally {
       setLoading(false);
     }
