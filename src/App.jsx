@@ -15,34 +15,34 @@ const { Header, Sider, Content } = Layout;
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);
 
+  const MainLayout = ({ children }) => (
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider trigger={null} collapsible collapsed={collapsed}>
+        <Sidebar collapsed={collapsed} />
+      </Sider>
+      <Layout>
+        <Header style={{ padding: 0 }}>
+          <HeaderBar 
+            collapsed={collapsed} 
+            onCollapse={setCollapsed} 
+          />
+        </Header>
+        <Content>
+          <MainContent>
+            {children}
+          </MainContent>
+        </Content>
+      </Layout>
+    </Layout>
+  );
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/*" element={
-          <Layout style={{ minHeight: '100vh' }}>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
-              <Sidebar collapsed={collapsed} />
-            </Sider>
-            <Layout>
-              <Header style={{ padding: 0 }}>
-                <HeaderBar 
-                  collapsed={collapsed} 
-                  onCollapse={setCollapsed} 
-                />
-              </Header>
-              <Content>
-                <MainContent>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/users" element={<Users />} />
-                    <Route path="/upload" element={<Upload />} />
-                  </Routes>
-                </MainContent>
-              </Content>
-            </Layout>
-          </Layout>
-        } />
+        <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+        <Route path="/users" element={<MainLayout><Users /></MainLayout>} />
+        <Route path="/upload" element={<MainLayout><Upload /></MainLayout>} />
       </Routes>
     </BrowserRouter>
   );
