@@ -54,7 +54,20 @@ const Sidebar = ({ collapsed }) => {
         selectedKeys={[location.pathname]}
         items={menuItems}
         onClick={handleMenuClick}
+        style={{
+          '--ant-menu-item-selected-bg': '#fff',
+        }}
+        className="custom-sidebar-menu"
       />
+      <style>{`
+        .custom-sidebar-menu .ant-menu-item-selected {
+          background-color: #fff !important;
+          color: #001529 !important;
+        }
+        .custom-sidebar-menu .ant-menu-item-selected .anticon {
+          color: #001529 !important;
+        }
+      `}</style>
     </div>
   );
 };
