@@ -19,7 +19,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="*" element={
+        <Route path="/*" element={
           <Layout style={{ minHeight: '100vh' }}>
             <Sider trigger={null} collapsible collapsed={collapsed}>
               <Sidebar collapsed={collapsed} />
