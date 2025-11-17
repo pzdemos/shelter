@@ -12,37 +12,59 @@ import Login from './pages/Login';
 
 const { Header, Sider, Content } = Layout;
 
+// 将 MainLayout 移到组件外部，避免重复创建
+const MainLayout = ({ children, collapsed, onCollapse }) => (
+  <Layout style={{ minHeight: '100vh' }}>
+    <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sidebar collapsed={collapsed} />
+    </Sider>
+    <Layout>
+      <Header style={{ padding: 0 }}>
+        <HeaderBar
+          collapsed={collapsed}
+          onCollapse={onCollapse}
+        />
+      </Header>
+      <Content>
+        <MainContent>
+          {children}
+        </MainContent>
+      </Content>
+    </Layout>
+  </Layout>
+);
+
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);
-
-  const MainLayout = ({ children }) => (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <Sidebar collapsed={collapsed} />
-      </Sider>
-      <Layout>
-        <Header style={{ padding: 0 }}>
-          <HeaderBar 
-            collapsed={collapsed} 
-            onCollapse={setCollapsed} 
-          />
-        </Header>
-        <Content>
-          <MainContent>
-            {children}
-          </MainContent>
-        </Content>
-      </Layout>
-    </Layout>
-  );
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/signin" element={<Login />} />
-        <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-        <Route path="/users" element={<MainLayout><Users /></MainLayout>} />
-        <Route path="/upload" element={<MainLayout><Upload /></MainLayout>} />
+        <Route
+          path="/"
+          element={
+            <MainLayout collapsed={collapsed} onCollapse={setCollapsed}>
+              <Home />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <MainLayout collapsed={collapsed} onCollapse={setCollapsed}>
+              <Users />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/upload"
+          element={
+            <MainLayout collapsed={collapsed} onCollapse={setCollapsed}>
+              <Upload />
+            </MainLayout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
