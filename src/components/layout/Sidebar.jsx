@@ -4,6 +4,7 @@ import {
   UploadOutlined,
   UserOutlined,
   HomeOutlined,
+  DatabaseOutlined,
 } from '@ant-design/icons';
 
 const Sidebar = ({ collapsed }) => {
@@ -20,6 +21,11 @@ const Sidebar = ({ collapsed }) => {
       key: '/users',
       icon: <UserOutlined />,
       label: '用户管理',
+    },
+    {
+      key: '/database',
+      icon: <DatabaseOutlined />,
+      label: '数据库管理',
     },
     {
       key: '/upload',

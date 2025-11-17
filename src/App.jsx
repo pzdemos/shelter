@@ -8,6 +8,7 @@ import MainContent from './components/layout/MainContent';
 import Home from './pages/Home';
 import Users from './pages/Users';
 import Upload from './pages/Upload';
+import Database from './pages/Database';
 import Login from './pages/Login';
 
 const { Header, Sider, Content } = Layout;
@@ -54,6 +55,14 @@ const App = () => {
           element={
             <MainLayout collapsed={collapsed} onCollapse={setCollapsed}>
               <Users />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/database"
+          element={
+            <MainLayout collapsed={collapsed} onCollapse={setCollapsed}>
+              <Database />
             </MainLayout>
           }
         />
