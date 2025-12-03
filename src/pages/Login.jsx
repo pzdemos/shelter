@@ -17,14 +17,18 @@ const Login = () => {
         password: values.password
       });
       
-      // 保存token
-      if (response.data?.token) {
-        localStorage.setItem('token', response.data.token);
+      // 保存 accessToken 和 refreshToken
+      if (response.success && response.data) {
+        localStorage.setItem('token', response.data.accessToken);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
       }
       
       messageApi.success('登录成功！');
       setTimeout(() => {
-        navigate('/');
+        // 获取重定向路径或默认跳转到首页
+        const redirect = new URLSearchParams(window.location.search).get('redirect') || '/';
+        navigate(redirect);
       }, 500);
     } catch (error) {
       console.error('登录失败:', error);

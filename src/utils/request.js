@@ -2,7 +2,7 @@ import axios from 'axios';
 import { message } from 'antd';
 
 const request = axios.create({
-  baseURL: '/api/v1',
+  baseURL: '/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
@@ -29,7 +29,24 @@ request.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    message.error(error.response?.data?.message || '请求失败');
+    const { response } = error;
+    
+    // 处理 401 未认证错误
+    if (response?.status === 401) {
+      message.error(response?.data?.message || '认证失败，请重新登录');
+      // 清除本地存储的认证信息
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      // 重定向到登录页，并携带当前路径
+      const currentPath = window.location.pathname;
+      if (currentPath !== '/login') {
+        window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}`;
+      }
+    } else {
+      message.error(response?.data?.message || '请求失败');
+    }
+    
     return Promise.reject(error);
   }
 );

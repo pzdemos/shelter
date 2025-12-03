@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://www.haoaiganfan.top',
+        target: 'https://z-gemini.deno.dev',
         changeOrigin: true,
         secure: false
       }
