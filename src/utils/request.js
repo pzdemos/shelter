@@ -2,7 +2,7 @@ import axios from 'axios';
 import { message } from 'antd';
 
 const request = axios.create({
-  baseURL:  window.location.origin.includes('localhost') ? 'http://localhost:5173/api' : 'https://z-gemini.deno.dev/api',
+  baseURL:  window.location.origin.includes('localhost') ? 'http://localhost:5173' : 'https://z-gemini.deno.dev',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
